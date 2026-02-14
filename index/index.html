@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will You Be My Valentine? 💕</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+    --rose: #e11d48;
+    --rose-light: #fb7185;
+    --rose-deep: #be123c;
+    --cream: #fff5f7;
+    --gold: #fbbf24;
+    --dark: #1c0a0d;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    background: var(--dark);
+    color: var(--cream);
+    overflow-x: hidden;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ========== FLOATING HEARTS BG ========== */
+.heart-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.heart-bg span {
+    position: absolute;
+    font-size: clamp(20px, 4vw, 40px);
+    opacity: 0.15;
+    animation: floatHeart 15s linear infinite;
+}
+
+@keyframes floatHeart {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.15; }
+    90% { opacity: 0.08; }
+    100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+}
+
+/* ========== SCREENS ========== */
+.screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    z-index: 1;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.screen.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ========== SCREEN 1: ASK ========== */
+.screen-ask {
+    background: linear-gradient(160deg, #1c0a0d 0%, #2d0f18 40%, #1a080c 100%);
+}
+
+.screen-ask .ask-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 600;
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+    animation: fadeUp 1s ease forwards;
+}
+
+.screen-ask .ask-question {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--rose-light), var(--rose));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 1s ease 0.2s forwards;
+    opacity: 0;
+}
+
+.screen-ask .btn-wrap {
+    position: relative;
+    width: min(90vw, 400px);
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeUp 1s ease 0.4s forwards;
+    opacity: 0;
+}
+
+.btn-yes {
+    padding: 1rem 2.5rem;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--rose-light), var(--rose-deep));
+    color: white;
+    box-shadow: 0 8px 32px rgba(225, 29, 72, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    z-index: 2;
+}
+
+.btn-yes:hover {
+    transform: scale(1.08);
+    box-shadow: 0 12px 40px rgba(225, 29, 72, 0.5);
+}
+
+.btn-no {
+    position: fixed;
+    padding: 0.85rem 2rem;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 50px;
+    cursor: pointer;
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.9);
+    transition: left 0.15s ease, top 0.15s ease, background 0.2s;
+    z-index: 10;
+}
+
+.btn-no:hover {
+    background: rgba(255,255,255,0.12);
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== SCREEN 2: YES RESPONSE ========== */
+.screen-yes {
+    background: linear-gradient(180deg, #1c0a0d 0%, #2d0f18 30%, #1a080c 70%, #0f0507 100%);
+    overflow-y: auto;
+    justify-content: flex-start;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+.screen-yes .yes-hero {
+    margin-bottom: 2rem;
+}
+
+.screen-yes .yes-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 6vw, 3.5rem);
+    font-weight: 600;
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+    animation: scaleIn 0.8s ease forwards;
+}
+
+.screen-yes .yes-hero .heart-burst {
+    font-size: 3rem;
+    animation: pulseHeart 1.5s ease infinite;
+}
+
+/* Hero photo (replace hearts with your picture) */
+.hero-photo-wrap {
+    margin: 0.5rem auto;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 3px solid rgba(251, 113, 133, 0.4);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+    animation: pulseHeart 2.5s ease infinite;
+    width: auto;
+    height: auto;
+}
+
+.hero-photo-wrap:has(img.loaded) {
+    width: min(280px, 85vw);
+    height: min(280px, 85vw);
+}
+
+.hero-photo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+}
+
+.hero-photo-wrap img.loaded { display: block; }
+.hero-photo-wrap .heart-burst { margin: 1rem 0; }
+.hero-photo-wrap:has(img.loaded) .heart-burst { display: none; }
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulseHeart {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.9; }
+}
+
+/* Quote carousel */
+.quote-box {
+    max-width: 560px;
+    margin: 0 auto 2rem;
+    padding: 2rem;
+    background: linear-gradient(145deg, rgba(225, 29, 72, 0.12), rgba(190, 18, 60, 0.06));
+    border: 1px solid rgba(251, 113, 133, 0.25);
+    border-radius: 24px;
+    position: relative;
+    min-height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quote-box::before {
+    content: '"';
+    position: absolute;
+    top: 0.5rem;
+    left: 1rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    color: var(--rose);
+    opacity: 0.4;
+}
+
+.quote-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.25rem, 3vw, 1.6rem);
+    font-style: italic;
+    color: rgba(255, 245, 247, 0.95);
+    line-height: 1.6;
+    transition: opacity 0.5s ease;
+}
+
+.quote-author {
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--rose-light);
+    font-weight: 600;
+}
+
+/* Image / card strip */
+.cards-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    justify-content: center;
+    margin: 2rem 0;
+    padding: 0 1rem;
+}
+
+.love-card {
+    width: 160px;
+    height: 200px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 3rem;
+    background: linear-gradient(145deg, rgba(251, 113, 133, 0.2), rgba(190, 18, 60, 0.15));
+    border: 1px solid rgba(251, 113, 133, 0.3);
+    animation: cardFloat 4s ease-in-out infinite;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+    overflow: hidden;
+    position: relative;
+}
+
+.love-card img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.love-card .card-emoji {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(145deg, rgba(251, 113, 133, 0.25), rgba(190, 18, 60, 0.2));
+    border-radius: 20px;
+    font-size: 3rem;
+}
+
+.love-card img.loaded + .card-emoji { display: none; }
+
+.love-card span {
+    position: relative;
+    z-index: 2;
+    display: block;
+    font-size: 0.85rem;
+    color: rgba(255,245,247,0.95);
+    margin: 0.5rem;
+    font-weight: 600;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+}
+
+.love-card:nth-child(1) { animation-delay: 0s; }
+.love-card:nth-child(2) { animation-delay: 0.5s; }
+.love-card:nth-child(3) { animation-delay: 1s; }
+.love-card:nth-child(4) { animation-delay: 1.5s; }
+.love-card:nth-child(5) { animation-delay: 2s; }
+
+@keyframes cardFloat {
+    0%, 100% { transform: translateY(0) rotate(-1deg); }
+    50% { transform: translateY(-12px) rotate(1deg); }
+}
+
+/* More quotes section */
+.quotes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.mini-quote {
+    padding: 1.25rem;
+    background: rgba(255,255,255,0.04);
+    border-radius: 16px;
+    border-left: 4px solid var(--rose);
+    text-align: left;
+    font-size: 1rem;
+    color: rgba(255,245,247,0.9);
+    animation: fadeInUp 0.8s ease backwards;
+}
+
+.mini-quote:nth-child(1) { animation-delay: 0.1s; }
+.mini-quote:nth-child(2) { animation-delay: 0.25s; }
+.mini-quote:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Closing line */
+.closing {
+    margin-top: 2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 600;
+    color: var(--rose-light);
+    animation: fadeInUp 0.8s ease 0.5s backwards;
+}
+</style>
+</head>
+<body>
+
+<div class="heart-bg" aria-hidden="true">
+    <span style="left: 5%; animation-delay: 0s;">❤</span>
+    <span style="left: 15%; animation-delay: 2s;">💕</span>
+    <span style="left: 28%; animation-delay: 4s;">❤</span>
+    <span style="left: 45%; animation-delay: 1s;">💖</span>
+    <span style="left: 62%; animation-delay: 5s;">❤</span>
+    <span style="left: 78%; animation-delay: 3s;">💕</span>
+    <span style="left: 90%; animation-delay: 6s;">💖</span>
+</div>
+
+<!-- SCREEN 1: Will you be my Valentine? -->
+<section class="screen screen-ask active" id="screenAsk">
+    <p class="ask-title">For you, with love</p>
+    <h2 class="ask-question">Will you be my Valentine?</h2>
+    <div class="btn-wrap" id="btnWrap">
+        <button type="button" class="btn-yes" id="btnYes">Yes 💖</button>
+        <button type="button" class="btn-no" id="btnNo">No</button>
+    </div>
+</section>
+
+<!-- SCREEN 2: After Yes -->
+<section class="screen screen-yes" id="screenYes">
+    <div class="yes-hero">
+        <h1>For me, this isn’t about Valentine’s Day. It’s about being with you forever...🤍</h1>
+        <div class="hero-photo-wrap">
+            <img src="images/hero.jpg" alt="Us" id="heroImg" onload="this.classList.add('loaded')">
+            <p class="heart-burst">"Love you bubu 🫶🎀"</p>
+        </div>
+    </div>
+
+    <div class="quote-box">
+        <p class="quote-text" id="quoteText">You are my today and all of my tomorrows.</p>
+        <p class="quote-author" id="quoteAuthor">— For you yashu</p>
+    </div>
+
+    <!-- Add your photos in the images folder: 1.jpg, 2.jpg, 3.jpg, 4.jpg, 5.jpg (cards) and hero.jpg (top). Emojis show if an image is missing. -->
+    <div class="cards-wrap">
+        <div class="love-card">
+            <img src="image1.jpeg" alt="Love" onload="this.classList.add('loaded')">
+            <span>🫶</span>
+            <span>us</span>
+        </div>
+        <div class="love-card">
+            <img src="image2.jpeg" alt="Love" onload="this.classList.add('loaded')">
+            <span>🎀</span>
+            <span>Love</span>
+        </div>
+        <div class="love-card">
+            <img src="image3.jpeg" alt="Forever" onload="this.classList.add('loaded')">
+            <span>💑</span>
+            <span>Forever</span>
+        </div>
+        <div class="love-card">
+            <img src="image4.jpeg" alt="Happy" onload="this.classList.add('loaded')">
+            <span>🤍</span>
+            <span>Happy</span>
+        </div>
+        <div class="love-card">
+            <img src="image5.jpeg" alt="Valentine" onload="this.classList.add('loaded')">
+            <span>✨️</span>
+            <span>Valentine</span>
+        </div>
+    </div>
+
+    <div class="quotes-grid">
+        <div class="mini-quote">"నిన్ను మొదటిసారి చూసిన ఆ క్షణం ఇంకా నా హృదయంలో స్పష్టంగా ఉంది.
+            అది సాధారణమైన పరిచయం కాదు…
+            నా జీవితాన్ని నిశ్శబ్దంగా మార్చిన ఒక ప్రత్యేకమైన ఆరంభం"</div>
+        <div class="mini-quote">"మెల్లగా మొదలైన మన మాటలు,
+            చిన్న నవ్వుల నుంచి పెద్ద భావాలుగా మారాయి.
+            తెలియకుండానే నువ్వు నా రోజుల్లో భాగమయ్యావు…
+            నా హృదయంలో మాత్రం పూర్తిగా స్థానం సంపాదించావు"</div>
+        <div class="mini-quote">"కాలం మారినా, పరిస్థితులు మారినా,
+            నీతోనే ఈ ప్రయాణం కొనసాగాలని నా మనసు కోరుకుంటోంది.
+            ఇది ఒక రోజు ప్రేమ కాదు…
+            జీవితాంతం కలిసి ఉండే ఒక అందమైన వాగ్దానం"</div>
+    </div>
+
+    <p class="closing">Happy Valentine's Day — with all my love Yashashri 💖</p>
+</section>
+
+<script>
+(function () {
+    const screenAsk = document.getElementById('screenAsk');
+    const screenYes = document.getElementById('screenYes');
+    const btnYes = document.getElementById('btnYes');
+    const btnNo = document.getElementById('btnNo');
+    const btnWrap = document.getElementById('btnWrap');
+
+    const quotes = [
+        { text: 'You are my today and all of my tomorrows.', aurtor: 'For you bubu' },
+        { text: 'I fell in love with you because of the million tiny ways you make me smile.', author: 'Rajkumar' },
+        { text: 'In you I\'ve found the love of my life and my closest, truest friend.', author: 'Raj kumar' },
+        { text: 'Every moment with you is like a beautiful dream I never want to end.', author: 'Yashu' },
+        { text: 'I choose you. And I\'ll choose you over and over. Without pause.', author: 'Pillu' },
+        { text: 'You are my heart, my life, my one and only thought.', author: 'Cutie' },
+        { text: 'The best thing to hold onto in life is each other.', author: 'my love' },
+        { text: 'I love you not only for what you are, but for what I am when I am with you.', author: 'Darling' }
+    ];
+
+    let quoteIndex = 0;
+    const quoteEl = document.getElementById('quoteText');
+    const authorEl = document.getElementById('quoteAuthor');
+
+    function showNextQuote() {
+        quoteEl.style.opacity = '0';
+        setTimeout(function () {
+            quoteIndex = (quoteIndex + 1) % quotes.length;
+            quoteEl.textContent = quotes[quoteIndex].text;
+            authorEl.textContent = '— ' + quotes[quoteIndex].author;
+            quoteEl.style.opacity = '1';
+        }, 400);
+    }
+
+    if (quoteEl && authorEl) {
+        setInterval(showNextQuote, 4500);
+    }
+
+    btnYes.addEventListener('click', function () {
+        screenAsk.classList.remove('active');
+        screenYes.classList.add('active');
+        btnNo.style.display = 'none';
+    });
+
+    function moveNoButton() {
+        const btn = btnNo.getBoundingClientRect();
+        const padding = 24;
+        const maxX = window.innerWidth - btn.width - padding * 2;
+        const maxY = window.innerHeight - btn.height - padding * 2;
+        const x = padding + Math.random() * Math.max(0, maxX);
+        const y = padding + Math.random() * Math.max(0, maxY);
+        btnNo.style.left = x + 'px';
+        btnNo.style.top = y + 'px';
+    }
+
+    function initNoButtonPosition() {
+        const wrap = btnWrap.getBoundingClientRect();
+        btnNo.style.left = (wrap.left + wrap.width / 2 - 60) + 'px';
+        btnNo.style.top = (wrap.top + wrap.height / 2 - 22) + 'px';
+    }
+    initNoButtonPosition();
+
+    btnNo.addEventListener('mouseenter', moveNoButton);
+    btnNo.addEventListener('click', function (e) {
+        e.preventDefault();
+        moveNoButton();
+    });
+})();
+</script>
+</body>
+</html>
